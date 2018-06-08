@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="订单号:">
       <el-input v-model="formInline.number" @keyup.enter.native="onSubmit" clearable placeholder=""></el-input>
     </el-form-item>
@@ -33,19 +33,16 @@
 
    <el-table
     :data="tableData"
-    style="width: 100%"
-    size="small">
+    >
     <el-table-column
       prop="username"
-      label="用户名/手机号"
-      width="160">
+      label="用户名/手机号">
       <template slot-scope="scope">
         <span>{{scope.row.username ? scope.row.username : '-'}}<br/>{{scope.row.mobile ? scope.row.mobile : '-'}}</span>
       </template>
     </el-table-column>
     <el-table-column
-      label="姓名/订单号"
-      width="180">
+      label="姓名/订单号">
       <template slot-scope="scope">
         <span>
           {{scope.row.name}}<br/>
@@ -54,78 +51,64 @@
       </template>
     </el-table-column>
     <el-table-column
-      label="银行/支行"
-      width="150">
+      label="所在地">
       <template slot-scope="scope">
-        <p>{{scope.row.bankName}}</p>
-        <p>{{scope.row.branch}}</p>
+        <span>{{scope.row.province + scope.row.city}}<br>{{scope.row.district}}</span>
       </template>
     </el-table-column>
     <el-table-column
-      label="所在地"
-      width="180">
+      label="银行信息">
       <template slot-scope="scope">
-        <span>{{scope.row.province + scope.row.city + scope.row.district}}</span>
+        {{scope.row.bankName + scope.row.branch}}<br>
+        {{scope.row.beankNumber}}
       </template>
     </el-table-column>
     <el-table-column
-      label="开户名/银行卡号"
-      width="180">
+    width="100%"
+      label="金额/手续费">
       <template slot-scope="scope">
-        <p>{{scope.row.realName}}</p>
-        <p>{{scope.row.beankNumber}}</p>
+        {{(scope.row.amount*1).toFixed(2)}}<br>
+        {{(scope.row.fee*1).toFixed(2)}}
       </template>
     </el-table-column>
     <el-table-column
-      label="金额/手续费"
-      width="130">
-      <template slot-scope="scope">
-        <p>{{(scope.row.amount*1).toFixed(2)}}</p>
-        <p>{{(scope.row.fee*1).toFixed(2)}}</p>
-      </template>
-    </el-table-column>
-    <el-table-column
+      prop="statusStr"
+      width="100%"
       label="状态">
-      <template slot-scope="scope">
-        <span v-if="scope.row.status == 0">待支付</span>
-        <span v-else-if="scope.row.status == 3">打款中...</span>
-        <span v-else-if="scope.row.status == 2">成功</span>
-        <span v-else-if="scope.row.status == 1">失败</span>
-      </template>
     </el-table-column>
     <el-table-column
-      prop="admin"
+      show-overflow-tooltip
+      width="100%"
       label="审核人">
-    </el-table-column>
-    <el-table-column
-      prop="remark"
-      label="备注"
-      width="130">
       <template slot-scope="scope">
-        <el-tooltip class="item" effect="dark" :content="scope.row.remark" placement="left">
-          <span>{{scope.row.remark|WidthCheck(12)}}</span>
-        </el-tooltip>
+        <span>{{scope.row.admin}} <br> {{scope.row.remark}}</span>
       </template>
     </el-table-column>
     <el-table-column
       prop="dateAdd"
-      label="添加/修改时间"
-      width="150">
+      label="添加/修改时间">
       <template slot-scope="scope">
-        <p>{{scope.row.dateAdd}}</p>
-        <p>{{scope.row.dateUpdate}}</p>
+        {{scope.row.dateAdd}}<br>
+        {{scope.row.dateUpdate}}
       </template>
     </el-table-column>
     <el-table-column
+    width="100%"
       label="操作"
-      width="226"
       v-if="merchantSet.isOwnZiguan">
       <template slot-scope="scope">
         <div v-if="scope.row.status == 0">
-         <el-button v-if="handleAble('/admin/userCashWithdraw/pay', Buttons)" @click="handleClick1(scope.row)" type="text" size="small" style="color: #DD5A43">代付</el-button>
-         <el-button v-if="handleAble('/admin/userCashWithdraw/payWlyx', Buttons)" @click="handleClick2(scope.row)" type="text" size="small" style="color: #DD5A43">未来优势代付</el-button>
-         <el-button v-if="handleAble('/admin/userCashWithdraw/setSuccess', Buttons)" @click="handleClick3(scope.row)" type="text" size="small" style="color: #4D9029">通过</el-button>
-         <el-button v-if="handleAble('/admin/userCashWithdraw/setFail', Buttons)" @click="handleClick4(scope.row)" type="text" size="small" style="color: #DD5A43">不通过</el-button>
+          <el-dropdown>
+            <el-button type="primary">
+              操作<i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item><el-button v-if="handleAble('/admin/userCashWithdraw/pay', Buttons)" @click="handleClick1(scope.row)" type="text"  style="color: #DD5A43">代付</el-button></el-dropdown-item>
+              <el-dropdown-item><el-button v-if="handleAble('/admin/userCashWithdraw/payWlyx', Buttons)" @click="handleClick2(scope.row)" type="text"  style="color: #DD5A43">未来优势代付</el-button></el-dropdown-item>
+              <el-dropdown-item><el-button v-if="handleAble('/admin/userCashWithdraw/setSuccess', Buttons)" @click="handleClick3(scope.row)" type="text"  style="color: #4D9029">通过</el-button></el-dropdown-item>
+              <el-dropdown-item><el-button v-if="handleAble('/admin/userCashWithdraw/setFail', Buttons)" @click="handleClick4(scope.row)" type="text"  style="color: #DD5A43">不通过</el-button></el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
        </div>
       </template>
     </el-table-column>
@@ -146,7 +129,7 @@
 
    <!--弹出框-->
    <el-dialog :title="passStr" :visible.sync="dialogFormVisible" width="40%">
-     <el-form label-width="100px" :model="formLabelAlign" ref="formLabelAlign" size="small">
+     <el-form label-width="100px" :model="formLabelAlign" ref="formLabelAlign" >
         <el-form-item label="备注" prop="remark">
           <el-input type="textarea" :rows="4" v-model="formLabelAlign.remark"></el-input>
         </el-form-item>
@@ -184,7 +167,7 @@ export default {
       upload_url: uri + '/plupload',
       formInline: {
         page: 1,
-        pageSize: 15,
+        pageSize: 10,
         dateAddBegin: '',
         dateAddEnd: '',
         number: '',
@@ -195,7 +178,7 @@ export default {
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       },
@@ -344,7 +327,6 @@ export default {
     },
     // 重置的效果
     resetForm (formName) {
-      this.clearUploadedImage()
       this.$refs[formName].resetFields()
     },
     // 调不通过的接口
@@ -396,13 +378,18 @@ export default {
     },
     // 导出Excel
     exportExcel () {
+      const that = this
       const defaultCellStyle = {font: {name: 'Verdana', sz: 11, color: 'FF00FF88'}, fill: {fgColor: {rgb: 'FFFFAA00'}}}
       const wopts = {bookType: 'xlsx', bookSST: false, type: 'binary', defaultCellStyle: defaultCellStyle, showGridLines: false}
       const wb = { SheetNames: ['Sheet1'], Sheets: {}, Props: {} }
       let data = []
-      APIFinance.userCashWithdrawList({page: 1, pageSize: 10000}).then(response => {
+      let formSerach = Object.assign({}, that.formInline)
+      formSerach.page = 1
+      formSerach.pageSize = 10000
+      APIFinance.userCashWithdrawList(formSerach).then(response => {
         if (response.code === 0) {
           let result = response.data.pageBean.result
+          let objArr = []
           if (result.length > 0) {
             result.forEach(ele => {
               let user = response.data.userBaseInfoMap[ele.userId]
@@ -415,9 +402,33 @@ export default {
                 ele.mobile = ''
                 ele.name = ''
               }
+              if (ele.adminId) {
+                ele.admin = response.data.merchantSubAcountMap[ele.adminId].name
+              }
+              let obj = {
+                '用户名': ele.username,
+                '手机号': ele.mobile,
+                '姓名': ele.realName,
+                '订单号': ele.number,
+                '银行名称': ele.bankName,
+                '开户行省': ele.province,
+                '开户行市': ele.city,
+                '区县': ele.district,
+                '支行': ele.branch,
+                '开户名': ele.realName,
+                '银行卡号': ele.beankNumber,
+                '提现金额': ele.amount,
+                '手续费': ele.fee,
+                '状态': ele.statusStr,
+                '操作管理员': ele.admin,
+                '备注': ele.remark,
+                '添加时间': ele.dateAdd,
+                '修改时间': ele.dateUpdate
+              }
+              objArr.push(obj)
             })
           }
-          data = result
+          data = objArr
           wb.Sheets['Sheet1'] = XLSX.utils.json_to_sheet(data)
           // 创建二进制对象写入转换好的字节流
           let tmpDown = new Blob([this.s2ab(XLSX.write(wb, wopts))], { type: 'application/octet-stream' })

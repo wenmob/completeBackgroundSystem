@@ -1,11 +1,11 @@
 <template>
   <div class="bis-page">
-   <el-button type="success" @click="add" size="small"><i class="el-icon-plus" v-if="handleAble('/admin/merchantSetProductContract/save', Buttons)"></i>添加</el-button>
+   <el-button type="success" @click="add" ><i class="el-icon-plus" v-if="handleAble('/admin/merchantSetProductContract/save', Buttons)"></i>添加</el-button>
 
    <el-table
     :data="tableData"
     style="width: 100%; margin-top: 20px"
-    size="small">
+    >
     <el-table-column
       prop="type"
       label="类型">
@@ -34,10 +34,10 @@
     </el-table-column>
     <el-table-column
       label="操作"
-      width="90">
+      width="120">
       <template slot-scope="scope">
-         <el-button @click="handleClick1(scope.row)" type="text" size="small" style="color: #467929" v-if="handleAble('/admin/merchantSetProductContract/save', Buttons)">编辑</el-button>
-         <el-button @click="handleClick2(scope.row)" type="text" size="small" style="color: #DD5A43" v-if="handleAble('/admin/merchantSetProductContract/del', Buttons)">删除</el-button>
+         <el-button @click="handleClick1(scope.row)" type="text"  style="color: #467929" v-if="handleAble('/admin/merchantSetProductContract/save', Buttons)">编辑</el-button>
+         <el-button @click="handleClick2(scope.row)" type="text"  style="color: #DD5A43" v-if="handleAble('/admin/merchantSetProductContract/del', Buttons)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -75,12 +75,12 @@ export default {
       value1: '',
       formInline: {
         page: 1,
-        pageSize: 15
+        pageSize: 10
       },
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       }

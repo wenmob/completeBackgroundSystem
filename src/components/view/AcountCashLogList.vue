@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="用户名:">
       <el-input v-model="formInline.username" @keyup.enter.native="onSubmit" clearable placeholder=""></el-input>
     </el-form-item>
@@ -49,7 +49,7 @@
    <el-table
     :data="tableData"
     style="width: 100%"
-    size="small">
+    >
     <el-table-column
       prop="dateAdd"
       label="时间">
@@ -120,7 +120,7 @@ export default {
     return {
       formInline: {
         page: 1,
-        pageSize: 15,
+        pageSize: 10,
         dateAddBegin: '',
         dateAddEnd: '',
         username: '',
@@ -134,7 +134,7 @@ export default {
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       }
@@ -189,13 +189,18 @@ export default {
     },
     // 导出Excel
     exportExcel () {
+      const that = this
       const defaultCellStyle = {font: {name: 'Verdana', sz: 11, color: 'FF00FF88'}, fill: {fgColor: {rgb: 'FFFFAA00'}}}
       const wopts = {bookType: 'xlsx', bookSST: false, type: 'binary', defaultCellStyle: defaultCellStyle, showGridLines: false}
       const wb = { SheetNames: ['Sheet1'], Sheets: {}, Props: {} }
       let data = []
-      APIFinance.acountCashLogList({page: 1, pageSize: 10000}).then(response => {
+      let formSerach = Object.assign({}, that.formInline)
+      formSerach.page = 1
+      formSerach.pageSize = 10000
+      APIFinance.acountCashLogList(formSerach).then(response => {
         if (response.code === 0) {
           let result = response.data.pageBean.result
+          let objArr = []
           if (result.length > 0) {
             result.forEach(ele => {
               let user = response.data.userBaseInfoMap[ele.userId]
@@ -208,9 +213,23 @@ export default {
                 ele.mobile = ''
                 ele.realName = ''
               }
+              ele.orderNumber = response.data.orderInfoMap[ele.orderId].number
+              let obj = {
+                '序号': ele.id,
+                '时间': ele.dateAdd,
+                '操作类型': ele.typeStr,
+                '用户名': ele.username,
+                '手机号': ele.mobile,
+                '姓名': ele.realName,
+                '账户编号': ele.acountId,
+                '收入/支出': ele.behaviorStr,
+                '支付订单': ele.orderNumber,
+                '备注': ele.remark
+              }
+              objArr.push(obj)
             })
           }
-          data = result
+          data = objArr
           wb.Sheets['Sheet1'] = XLSX.utils.json_to_sheet(data)
           // 创建二进制对象写入转换好的字节流
           let tmpDown = new Blob([this.s2ab(XLSX.write(wb, wopts))], { type: 'application/octet-stream' })

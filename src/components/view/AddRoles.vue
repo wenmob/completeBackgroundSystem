@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form ref="form" :model="form" :rules="formRules" label-width="80px" size="small" style="width: 500px;">
+    <el-form ref="form" :model="form" :rules="formRules" label-width="80px"  style="width: 500px;">
       <el-form-item label="名称：" prop="name">
         <el-input v-model="form.name" @keyup.enter.native="submitForm('form')" clearable></el-input>
       </el-form-item>

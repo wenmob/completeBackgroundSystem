@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-    <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+    <el-form :inline="true" :model="formInline" class="demo-form-inline" >
       <el-form-item label="用户名">
         <el-input v-model="formInline.username" @keyup.enter.native="onSubmit" clearable placeholder=""></el-input>
       </el-form-item>
@@ -36,7 +36,6 @@
       ref="multipleTable"
       :data="tableData"
       style="width: 100%"
-      size="small"
       tooltip-effect="dark"
       @selection-change="handleSelectionChange"
       v-loading="loading">
@@ -95,15 +94,15 @@
         label="操作"
         width="70">
         <template slot-scope="scope">
-         <el-button @click="handleClick(scope.row)" type="text" size="small" style="color: #FF892A">重置密码</el-button>
+         <el-button @click="handleClick(scope.row)" type="text"  style="color: #FF892A">重置密码</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <div class="block" style="margin-top:10px;">
-      <el-button type="success" size="small" @click="batchStop" v-if="handleAble('/admin/userBaseInfo/batchStop', Buttons)">批量禁用</el-button>
-      <el-button type="success" size="small" @click="batchStart" v-if="handleAble('/admin/userBaseInfo/batchStart', Buttons)">批量启用</el-button>
-      <el-select v-model="value2" clearable placeholder="分配经纪人" @change="allotBatch" size="small" v-if="handleAble('/admin/userBaseInfo/batchAllotment', Buttons)">
+      <el-button type="success"  @click="batchStop" v-if="handleAble('/admin/userBaseInfo/batchStop', Buttons)">批量禁用</el-button>
+      <el-button type="success"  @click="batchStart" v-if="handleAble('/admin/userBaseInfo/batchStart', Buttons)">批量启用</el-button>
+      <el-select v-model="value2" clearable placeholder="分配经纪人" @change="allotBatch"  v-if="handleAble('/admin/userBaseInfo/batchAllotment', Buttons)">
        <el-option
         v-for="item in options2"
         :key="item.id"
@@ -136,6 +135,7 @@ export default {
       loading: true,
       formInline: {
         page: 1,
+        pageSize: 10,
         username: '',
         mobile: '',
         nameLike: '',
@@ -148,7 +148,7 @@ export default {
       options2: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       }
@@ -161,7 +161,7 @@ export default {
     // 获取表格的数据
     getTableDatas (formInline) {
       const that = this
-      API.baseInfoList(formInline.page, formInline.username, formInline.mobile, formInline.status, formInline.salesManager, formInline.nameLike)
+      API.baseInfoList(formInline)
         .then(response => {
           if (response.code === 0) {
             let result = response.data.pageBean.result

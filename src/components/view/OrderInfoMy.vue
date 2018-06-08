@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="用户名:">
       <el-input v-model="formInline.username" placeholder=""></el-input>
     </el-form-item>
@@ -57,7 +57,7 @@
    <el-table
     :data="tableData"
     style="width: 100%;margin-top:20px"
-    size="small">
+    >
     <el-table-column
       prop="id"
       label="序号"
@@ -127,7 +127,7 @@
       v-if="handleAble('/admin/orderInfo/view', Buttons)"
       label="操作">
       <template slot-scope="scope">
-        <el-button type="text" @click="goDetails(scope.row)" size="small">详情</el-button>
+        <el-button type="text" @click="goDetails(scope.row)" >详情</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -154,7 +154,7 @@ export default {
     return {
       formInline: {
         page: 1,
-        pageSize: 15,
+        pageSize: 10,
         dateEndBegin: '',
         dateEndEnd: '',
         username: '',
@@ -168,7 +168,7 @@ export default {
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       }

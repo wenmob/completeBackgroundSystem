@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-    <el-form ref="form" :model="form" :rules="rules" label-width="110px" style="width:500px" size="small">
+    <el-form ref="form" :model="form" :rules="rules" label-width="110px" style="width:500px" >
       <el-form-item label="商户号：" prop="userLoginId">
         <el-input v-model="form.userLoginId" @keyup.enter.native="submitForm('form')" clearable auto-complete="off"></el-input>
       </el-form-item>

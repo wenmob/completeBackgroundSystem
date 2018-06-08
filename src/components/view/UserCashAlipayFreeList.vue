@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="订单号:">
       <el-input v-model="formInline.ddh" @keyup.enter.native="onSubmit" clearable placeholder=""></el-input>
     </el-form-item>
@@ -27,7 +27,7 @@
    <el-table
     :data="tableData"
     style="width: 100%"
-    size="small">
+    >
     <el-table-column
       prop="id"
       label="序号"
@@ -78,7 +78,7 @@
     <el-table-column
       prop="dateAdd"
       label="添加时间/修改时间"
-      width="150">
+      width="160">
       <template slot-scope="scope">
          <span>{{scope.row.dateAdd ? scope.row.dateAdd : '-'}}<br/>{{scope.row.dateUpdate ? scope.row.dateUpdate : '-'}}</span>
       </template>
@@ -87,7 +87,7 @@
       v-if="handleAble('/admin/userCashAlipayFree/cancel', Buttons)"
       label="操作">
       <template slot-scope="scope">
-         <el-button @click="handleClick(scope.row)" type="text" size="small" style="color: #DD5A43" v-if="scope.row.status == 0">作废</el-button>
+         <el-button @click="handleClick(scope.row)" type="text"  style="color: #DD5A43" v-if="scope.row.status == 0">作废</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -116,7 +116,7 @@ export default {
     return {
       formInline: {
         page: 1,
-        pageSize: 15,
+        pageSize: 10,
         dateAddBegin: '',
         dateAddEnd: '',
         ddh: '',
@@ -125,7 +125,7 @@ export default {
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       }
@@ -208,13 +208,18 @@ export default {
     },
     // 导出Excel
     exportExcel () {
+      const that = this
       const defaultCellStyle = {font: {name: 'Verdana', sz: 11, color: 'FF00FF88'}, fill: {fgColor: {rgb: 'FFFFAA00'}}}
       const wopts = {bookType: 'xlsx', bookSST: false, type: 'binary', defaultCellStyle: defaultCellStyle, showGridLines: false}
       const wb = { SheetNames: ['Sheet1'], Sheets: {}, Props: {} }
       let data = []
-      APIFinance.userCashAlipayFreeList({page: 1, pageSize: 10000}).then(response => {
+      let formSerach = Object.assign({}, that.formInline)
+      formSerach.page = 1
+      formSerach.pageSize = 10000
+      APIFinance.userCashAlipayFreeList(formSerach).then(response => {
         if (response.code === 0) {
           let result = response.data.pageBean.result
+          let objArr = []
           if (result.length > 0) {
             result.forEach(ele => {
               let user = response.data.userBaseInfoMap[ele.userId]
@@ -227,9 +232,24 @@ export default {
                 ele.mobile = ''
                 ele.realName = ''
               }
+              let obj = {
+                '序号': ele.id,
+                '用户名': ele.username,
+                '手机号': ele.mobile,
+                '姓名': ele.realName,
+                '支付宝姓名': ele.name,
+                '支付宝账号': ele.account,
+                '订单号': ele.ddh,
+                '金额': ele.money,
+                '状态': ele.statusStr,
+                '备注': ele.goodsName,
+                '添加时间': ele.dateAdd,
+                '修改时间': ele.dateUpdate
+              }
+              objArr.push(obj)
             })
           }
-          data = result
+          data = objArr
           wb.Sheets['Sheet1'] = XLSX.utils.json_to_sheet(data)
           // 创建二进制对象写入转换好的字节流
           let tmpDown = new Blob([this.s2ab(XLSX.write(wb, wopts))], { type: 'application/octet-stream' })

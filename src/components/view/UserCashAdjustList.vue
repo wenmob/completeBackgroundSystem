@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="用户名:">
       <el-input v-model="formInline.username" @keyup.enter.native="onSubmit" clearable placeholder=""></el-input>
     </el-form-item>
@@ -38,7 +38,7 @@
    <el-table
     :data="tableData"
     style="width: 100%"
-    size="small">
+    >
     <el-table-column
       prop="username"
       label="用户名/手机号">
@@ -126,7 +126,7 @@ export default {
         dateUpdateEnd: '',
         status: '',
         page: 1,
-        pageSize: 15,
+        pageSize: 10,
         amount: '',
         number: '',
         dateAddBegin: '',
@@ -138,7 +138,7 @@ export default {
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       }

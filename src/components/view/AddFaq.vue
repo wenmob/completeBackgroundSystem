@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-    <el-form  label-width="100px" :model="formLabelAlign" ref="formLabelAlign" :rules="rules" size="small">
+    <el-form  label-width="100px" :model="formLabelAlign" ref="formLabelAlign" :rules="rules" >
       <el-form-item label="类型" prop="type">
         <el-select v-model="formLabelAlign.type" clearable placeholder="" @keyup.enter.native="submitForm('formLabelAlign')">
           <el-option label="常见问题" :value="0"></el-option>

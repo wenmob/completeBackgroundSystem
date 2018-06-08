@@ -1,10 +1,10 @@
 <template>
   <div class="bis-page">
-   <el-button v-if="handleAble('/admin/merchantSetAccountGroup/sync', Buttons)" type="success" @click="onSubmit" size="small"><i class="el-icon-plus"></i>同步</el-button>
+   <el-button v-if="handleAble('/admin/merchantSetAccountGroup/sync', Buttons)" type="success" @click="onSubmit" ><i class="el-icon-plus"></i>同步</el-button>
    <el-table
     :data="tableData"
     style="width: 100%;margin-top:20px"
-    size="small">
+    >
     <el-table-column
       prop="groupName"
       label="报单通道名称">
@@ -19,8 +19,8 @@
     <el-table-column
       label="操作">
       <template slot-scope="scope">
-          <el-button v-if="handleAble('/admin/merchantSetAccountGroup/save', Buttons)" @click="handleClick(scope.row)" type="text" style="color: #69AA46" size="small">编辑</el-button>
-          <el-button v-if="handleAble('/admin/merchantSetAccountGroup/del', Buttons)" type="text" style="color: #DD5A5E" size="small" @click="del(scope.row)">删除</el-button>
+          <el-button v-if="handleAble('/admin/merchantSetAccountGroup/save', Buttons)" @click="handleClick(scope.row)" type="text" style="color: #69AA46" >编辑</el-button>
+          <el-button v-if="handleAble('/admin/merchantSetAccountGroup/del', Buttons)" type="text" style="color: #DD5A5E"  @click="del(scope.row)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -39,7 +39,7 @@
    </div>
 
    <el-dialog title="编辑" :visible.sync="dialogFormVisible" width="20%">
-     <el-form label-width="80px" :model="formLabelAlign" :rules="rules" ref="formLabelAlign" size="small">
+     <el-form label-width="80px" :model="formLabelAlign" :rules="rules" ref="formLabelAlign" >
         <el-form-item label="排序" prop="paixu">
           <el-input v-model="formLabelAlign.paixu" keyup.enter.native="establish('formLabelAlign')" clearable></el-input>
         </el-form-item>
@@ -64,12 +64,13 @@ export default {
   data () {
     return {
       formInline: {
-        page: 1
+        page: 1,
+        pageSize: 10
       },
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       },
@@ -93,7 +94,7 @@ export default {
     getTableDate () {
       const that = this
       let formInline = that.formInline
-      API.merchantSetAccountGroupList(formInline.page).then(response => {
+      API.merchantSetAccountGroupList(formInline).then(response => {
         console.log(response)
         if (response.code === 0) {
           let result = response.data.pageBean.result

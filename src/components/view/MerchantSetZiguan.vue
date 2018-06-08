@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-    <el-form label-width="100px" :model="form" style="width:600px" size="small">
+    <el-form label-width="100px" :model="form" style="width:600px" >
       <el-form-item label="资管系统域名:">
         <el-input type="text" v-model="form.domain" @keyup.enter.native="submitForm" clearable></el-input>
       </el-form-item>

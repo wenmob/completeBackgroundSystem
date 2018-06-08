@@ -46,7 +46,7 @@
     </el-container>
     <!--修改密码-->
     <el-dialog title="修改密码" :visible.sync="dialogPasswordVisible" width="30%">
-      <el-form size="small" :model="formPwd" ref="formPwd" :rules="rulePwd" label-width="70px">
+      <el-form  :model="formPwd" ref="formPwd" :rules="rulePwd" label-width="70px">
         <el-form-item label="原密码" prop="oldPwd">
           <el-input type="password" v-model="formPwd.oldPwd"></el-input>
         </el-form-item>

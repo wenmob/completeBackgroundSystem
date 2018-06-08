@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="用户名：">
       <el-input v-model="formInline.username" @keyup.enter.native="onSubmit" clearable placeholder=""></el-input>
     </el-form-item>
@@ -20,7 +20,7 @@
     :data="tableData"
     id="out-table"
     style="width: 100%"
-    size="small">
+    >
     <el-table-column
       prop="id"
       label="用户ID"
@@ -62,7 +62,7 @@
       width="70"
       v-if="merchantSet.isOwnZiguan && handleAble('/admin/userMoney/modify', Buttons)">
       <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text" size="small" style="color: #DD5A43">加减币</el-button>
+        <el-button @click="handleClick(scope.row)" type="text"  style="color: #DD5A43">加减币</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -82,7 +82,7 @@
 
    <!--弹出框-->
    <el-dialog title="加减币" :visible.sync="dialogFormVisible" width="40%">
-     <el-form label-width="100px" :model="formLabelAlign" :rules="rules" ref="formLabelAlign" size="small">
+     <el-form label-width="100px" :model="formLabelAlign" :rules="rules" ref="formLabelAlign" >
         <el-form-item label="金钱" prop="amount">
           <el-input v-model="formLabelAlign.amount" @keyup.enter.native="submitForm('formLabelAlign')" clearable placeholder="减币请输入负值"></el-input>
         </el-form-item>
@@ -127,10 +127,10 @@ export default {
     return {
       dialogFormVisible: false,
       upload_url: uri + '/plupload',
-      tableAllDatas: [],
       merchantSet: {},
       formInline: {
         page: 1,
+        pageSize: 10,
         username: '',
         mobile: '',
         realNameLike: '',
@@ -139,7 +139,7 @@ export default {
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       },
@@ -158,8 +158,7 @@ export default {
     }
   },
   mounted () {
-    this.getTableDate(this.formInline, 15)
-    this.getAllTableData()
+    this.getTableDate(this.formInline, 10)
     let m = JSON.parse(getMS())
     this.merchantSet = m
   },
@@ -167,7 +166,7 @@ export default {
     // 获取表格数据
     getTableDate (formInline, pageSize) {
       const that = this
-      APIFinance.getUserMoney(formInline.page, pageSize, formInline.username, formInline.mobile, formInline.realNameLike, formInline.orderBy).then(response => {
+      APIFinance.getUserMoney(formInline).then(response => {
         if (response.code === 0) {
           let result = response.data.pageBean.result
           that.pagination.pageSize = response.data.pageBean.pageSize
@@ -181,24 +180,6 @@ export default {
             })
           }
           that.tableData = result
-        }
-      })
-    },
-    // 获取所有的数据
-    getAllTableData () {
-      const that = this
-      APIFinance.getUserMoney(1, 10000).then(response => {
-        if (response.code === 0) {
-          let result = response.data.pageBean.result
-          if (result.length > 0) {
-            result.forEach(ele => {
-              let userObj = response.data.userBaseInfoMap[ele.id]
-              ele.mobile = userObj.mobile
-              ele.name = userObj.name
-              ele.username = userObj.username
-            })
-          }
-          that.tableAllDatas = result
         }
       })
     },
@@ -266,14 +247,44 @@ export default {
     },
     // 导出Excel
     exportExcel () {
+      const that = this
       const defaultCellStyle = {font: {name: 'Verdana', sz: 11, color: 'FF00FF88'}, fill: {fgColor: {rgb: 'FFFFAA00'}}}
       const wopts = {bookType: 'xlsx', bookSST: false, type: 'binary', defaultCellStyle: defaultCellStyle, showGridLines: false}
       const wb = { SheetNames: ['Sheet1'], Sheets: {}, Props: {} }
-      let data = this.tableAllDatas
-      wb.Sheets['Sheet1'] = XLSX.utils.json_to_sheet(data)
-      // 创建二进制对象写入转换好的字节流
-      let tmpDown = new Blob([this.s2ab(XLSX.write(wb, wopts))], { type: 'application/octet-stream' })
-      FileSaver.saveAs(tmpDown, '用户余额.xlsx')
+      let data = []
+      let objArr = []
+      let formSerach = Object.assign({}, that.formInline)
+      formSerach.page = 1
+      formSerach.pageSize = 10000
+      APIFinance.getUserMoney(formSerach).then(response => {
+        if (response.code === 0) {
+          let result = response.data.pageBean.result
+          if (result.length > 0) {
+            result.forEach(ele => {
+              let userObj = response.data.userBaseInfoMap[ele.id]
+              ele.mobile = userObj.mobile
+              ele.name = userObj.name
+              ele.username = userObj.username
+              let obj = {
+                '序号': ele.id,
+                '姓名': ele.name,
+                '用户名': ele.username,
+                '手机号': ele.mobile,
+                '可用余额': ele.balance,
+                '冻结金额': ele.freeze,
+                '抵用金': ele.voucherMoney,
+                '积分': ele.score
+              }
+              objArr.push(obj)
+            })
+            data = objArr
+            wb.Sheets['Sheet1'] = XLSX.utils.json_to_sheet(data)
+            // 创建二进制对象写入转换好的字节流
+            let tmpDown = new Blob([this.s2ab(XLSX.write(wb, wopts))], { type: 'application/octet-stream' })
+            FileSaver.saveAs(tmpDown, '用户余额.xlsx')
+          }
+        }
+      })
     },
     // 字符串转字符流
     s2ab (s) {

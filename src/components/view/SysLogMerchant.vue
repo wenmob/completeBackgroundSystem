@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="模块名称:">
       <el-input v-model="formInline.moduleType" @keyup.enter.native="onSubmit" clearable placeholder=""></el-input>
     </el-form-item>
@@ -43,7 +43,7 @@
    <el-table
     :data="tableData"
     style="width: 100%"
-    size="small">
+    >
     <el-table-column
       prop="moduleType"
       label="所属模块">
@@ -60,16 +60,13 @@
     </el-table-column>
     <el-table-column
       prop="uri"
+      show-overflow-tooltip
       label="相关链接">
     </el-table-column>
     <el-table-column
       prop="msg"
+      show-overflow-tooltip
       label="操作记录">
-      <template slot-scope="scope">
-        <el-tooltip class="item" effect="dark" :content="scope.row.msg" placement="left">
-         <span>{{scope.row.msg|WidthCheck(20)}}</span>
-        </el-tooltip>
-      </template>
     </el-table-column>
     <el-table-column
       prop="adminName"
@@ -84,7 +81,7 @@
     <el-table-column
       prop="dateAdd"
       label="操作时间"
-      width="150">
+      width="160">
     </el-table-column>
   </el-table>
 
@@ -110,6 +107,7 @@ export default {
     return {
       formInline: {
         page: 1,
+        pageSize: 10,
         dateAddBegin: '',
         dateAddEnd: '',
         moduleType: '',
@@ -124,7 +122,7 @@ export default {
       options: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       }
@@ -138,7 +136,7 @@ export default {
     getTableDate () {
       const that = this
       let formInline = that.formInline
-      API.sysLogMerchantList(formInline.page, formInline.dateAddBegin, formInline.dateAddEnd, formInline.moduleType, formInline.oprateType, formInline.name, formInline.adminId, formInline.uriLike, formInline.msgLike, formInline.ipLike).then(response => {
+      API.sysLogMerchantList(formInline).then(response => {
         if (response.code === 0) {
           that.options = []
           let result = response.data.pageBean.result

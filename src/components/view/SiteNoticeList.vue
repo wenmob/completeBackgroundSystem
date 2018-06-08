@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="标题:">
       <el-input v-model="formInline.titleLike" @keyup.enter.native="onSubmit" clearable placeholder=""></el-input>
     </el-form-item>
@@ -39,7 +39,7 @@
    <el-table
     :data="tableData"
     style="width: 100%"
-    size="small">
+    >
     <el-table-column
       prop="type"
       label="类型">
@@ -72,10 +72,10 @@
     </el-table-column>
     <el-table-column
       label="操作"
-      width="90">
+      width="120">
       <template slot-scope="scope">
-         <el-button @click="handleClick1(scope.row)" type="text" size="small" style="color: #467929" v-if="handleAble('/admin/siteNotice/save', Buttons)">编辑</el-button>
-         <el-button @click="handleClick2(scope.row)" type="text" size="small" style="color: #DD5A43" v-if="handleAble('/admin/siteNotice/del', Buttons)">删除</el-button>
+         <el-button @click="handleClick1(scope.row)" type="text"  style="color: #467929" v-if="handleAble('/admin/siteNotice/save', Buttons)">编辑</el-button>
+         <el-button @click="handleClick2(scope.row)" type="text"  style="color: #DD5A43" v-if="handleAble('/admin/siteNotice/del', Buttons)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -103,7 +103,7 @@ export default {
       dialogFormVisible: false,
       formInline: {
         page: 1,
-        pageSize: 15,
+        pageSize: 10,
         dateAddBegin: '',
         dateAddEnd: '',
         dateUpdateBegin: '',
@@ -115,7 +115,7 @@ export default {
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       }

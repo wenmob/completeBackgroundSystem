@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="产品类型:">
       <el-select v-model="formInline.type" placeholder="请选择">
         <el-option label="全部" value=""></el-option>
@@ -41,7 +41,7 @@
    <el-table
     :data="tableData"
     style="width: 100%;margin-top:20px"
-    size="small">
+    >
     <el-table-column
       prop="dateAdd"
       label="扣款时间/业绩日期"
@@ -104,7 +104,7 @@
     <!-- <el-table-column
       label="操作">
       <template slot-scope="scope">
-        <el-button type="text" style="color: #F56C6C" @click="del(scope.row)" size="small" v-if="scope.row.status == 1">作废</el-button>
+        <el-button type="text" style="color: #F56C6C" @click="del(scope.row)"  v-if="scope.row.status == 1">作废</el-button>
       </template>
     </el-table-column> -->
   </el-table>
@@ -133,7 +133,7 @@ export default {
     return {
       formInline: {
         page: 1,
-        pageSize: 15,
+        pageSize: 10,
         dateAddBegin: '',
         dateAddEnd: '',
         type: '',
@@ -144,7 +144,7 @@ export default {
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       }
@@ -243,13 +243,18 @@ export default {
     },
     // 导出Excel
     exportExcel () {
+      const that = this
       const defaultCellStyle = {font: {name: 'Verdana', sz: 11, color: 'FF00FF88'}, fill: {fgColor: {rgb: 'FFFFAA00'}}}
       const wopts = {bookType: 'xlsx', bookSST: false, type: 'binary', defaultCellStyle: defaultCellStyle, showGridLines: false}
       const wb = { SheetNames: ['Sheet1'], Sheets: {}, Props: {} }
       let data = []
-      APIOrder.statisticsSallerYejiMy({page: 1, pageSize: 10000}).then(response => {
+      let formSerach = Object.assign({}, that.formInline)
+      formSerach.page = 1
+      formSerach.pageSize = 10000
+      APIOrder.statisticsSallerYejiMy(formSerach).then(response => {
         if (response.code === 0) {
           let result = response.data.pageBean.result
+          let objArr = []
           if (result.length > 0) {
             result.forEach(ele => {
               if (ele.userId) {
@@ -267,9 +272,28 @@ export default {
                   ele.admin = admins[n].name
                 }
               }
+              let obj = {
+                '序号': ele.id,
+                '姓名': ele.realName,
+                '手机号码': ele.mobile,
+                '用户名': ele.username,
+                '产品类型': ele.typeStr + '/' + ele.typeSubStr,
+                '经纪人': ele.admin,
+                '证券账号': ele.traderUsername,
+                '订单号': ele.orderNumber,
+                '保证金': ele.bzj,
+                '操盘金额': ele.cpje,
+                '收入': ele.income,
+                '成本': ele.cost,
+                '业绩': ele.yeji,
+                '状态': ele.statusStr,
+                '扣款时间': ele.dateAdd,
+                '业绩时间': ele.yejiDate
+              }
+              objArr.push(obj)
             })
           }
-          data = result
+          data = objArr
           wb.Sheets['Sheet1'] = XLSX.utils.json_to_sheet(data)
           // 创建二进制对象写入转换好的字节流
           let tmpDown = new Blob([this.s2ab(XLSX.write(wb, wopts))], { type: 'application/octet-stream' })

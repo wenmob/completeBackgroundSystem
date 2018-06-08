@@ -1,10 +1,10 @@
 <template>
    <div class="app-container">
-     <el-button type="success" icon="el-icon-plus" @click="goAddRole" size="small" v-if="handleAble('/admin/roles/add', Buttons)">添加</el-button>
+     <el-button type="success" icon="el-icon-plus" @click="goAddRole"  v-if="handleAble('/admin/roles/add', Buttons)">添加</el-button>
     <el-table
     :data="roles"
     border
-    size="small"
+    
     style="width: 100%; margin-top: 20px">
     <el-table-column
       prop="name"
@@ -17,8 +17,8 @@
     <el-table-column
       label="操作">
       <template slot-scope="scope">
-        <el-button @click="edit(scope.row)" type="text" size="small" style="color: #67C23A" v-if="handleAble('/admin/roles/add', Buttons)">编辑</el-button>
-        <el-button type="text" size="small" style="color: #FA3B1A" @click="remove(scope.row)" v-if="handleAble('/admin/roles/del', Buttons)">删除</el-button>
+        <el-button @click="edit(scope.row)" type="text"  style="color: #67C23A" v-if="handleAble('/admin/roles/add', Buttons)">编辑</el-button>
+        <el-button type="text"  style="color: #FA3B1A" @click="remove(scope.row)" v-if="handleAble('/admin/roles/del', Buttons)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>

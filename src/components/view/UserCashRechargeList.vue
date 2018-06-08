@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="充值单号:">
       <el-input v-model="formInline.number" @keyup.enter.native="onSubmit" clearable placeholder=""></el-input>
     </el-form-item>
@@ -47,7 +47,7 @@
    <el-table
     :data="tableData"
     style="width: 100%"
-    size="small">
+    >
     <el-table-column
       prop="id"
       label="序号"
@@ -102,7 +102,7 @@
     <el-table-column
       prop="dateAdd"
       label="添加时间/修改时间"
-      width="150">
+      width="160">
       <template slot-scope="scope">
          <span>{{scope.row.dateAdd ? scope.row.dateAdd : '-'}}<br/>{{scope.row.dateUpdate ? scope.row.dateUpdate : '-'}}</span>
       </template>
@@ -112,8 +112,8 @@
       width="140"
       v-if="merchantSet.isOwnZiguan">
       <template slot-scope="scope">
-         <el-button @click="handleClick1(scope.row)" type="text" size="small" style="color: #488624" v-if="scope.row.status == 0 && handleAble('/admin/userCashRecharge/setSuccess', Buttons)">设为成功</el-button>
-         <el-button @click="handleClick2(scope.row)" type="text" size="small" style="color: #FF892A" v-if="scope.row.status == 0 && handleAble('/admin/userCashRecharge/setFail', Buttons)">设为失败</el-button>
+         <el-button @click="handleClick1(scope.row)" type="text"  style="color: #488624" v-if="scope.row.status == 0 && handleAble('/admin/userCashRecharge/setSuccess', Buttons)">设为成功</el-button>
+         <el-button @click="handleClick2(scope.row)" type="text"  style="color: #FF892A" v-if="scope.row.status == 0 && handleAble('/admin/userCashRecharge/setFail', Buttons)">设为失败</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -141,7 +141,7 @@ export default {
     return {
       formInline: {
         page: 1,
-        pageSize: 15,
+        pageSize: 10,
         dateAddBegin: '',
         dateAddEnd: '',
         number: '',
@@ -153,7 +153,7 @@ export default {
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       },

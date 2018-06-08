@@ -1,11 +1,11 @@
 import request from './request'
 export const APIFinance = {
   // 获取用户余额的列表
-  getUserMoney: (page, pageSize, username, mobile, realNameLike, orderBy) => {
+  getUserMoney: (form) => {
     return request({
       url: '/admin/userMoney/list',
       method: 'post',
-      data: { page, pageSize, username, mobile, realNameLike, orderBy }
+      data: form
     })
   },
   // 加减币的功能

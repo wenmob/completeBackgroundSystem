@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="使用类型:">
       <el-select v-model="formInline.type" clearable placeholder="" @keyup.enter.native="onSubmit">
           <el-option label="全部" value=""></el-option>
@@ -35,7 +35,7 @@
 
    <el-table
     :data="tableData"
-    size="small">
+    >
     <el-table-column
       prop="pic"
       label="图片">
@@ -79,8 +79,8 @@
       label="操作"
       width="100">
       <template slot-scope="scope">
-         <el-button @click="handleClick1(scope.row)" type="text" size="small" style="color: #467929" v-if="handleAble('/admin/siteAdPosition/save', Buttons)">编辑</el-button>
-         <el-button @click="handleClick2(scope.row)" type="text" size="small" style="color: #DD5A43" v-if="handleAble('/admin/siteAdPosition/del', Buttons)">删除</el-button>
+         <el-button @click="handleClick1(scope.row)" type="text"  style="color: #467929" v-if="handleAble('/admin/siteAdPosition/save', Buttons)">编辑</el-button>
+         <el-button @click="handleClick2(scope.row)" type="text"  style="color: #DD5A43" v-if="handleAble('/admin/siteAdPosition/del', Buttons)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -102,7 +102,7 @@
     :title="alert"
     :visible.sync="dialogFormVisible"
     width="40%">
-    <el-form  label-width="100px" :model="formLabelAlign" ref="formLabelAlign" :rules="rules" size="small">
+    <el-form  label-width="100px" :model="formLabelAlign" ref="formLabelAlign" :rules="rules" >
       <el-form-item label="上传图片" prop="pic">
          <el-upload
           class="avatar-uploader"
@@ -165,7 +165,7 @@ export default {
       dialogFormVisible: false,
       formInline: {
         page: 1,
-        pageSize: 15,
+        pageSize: 10,
         type: '',
         isShow: '',
         position: ''
@@ -183,7 +183,7 @@ export default {
       },
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       },

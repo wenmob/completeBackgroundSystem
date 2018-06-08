@@ -1,13 +1,13 @@
 <template>
   <div class="bis-page">
-    <el-radio-group v-model="labelPosition" size="small">
+    <el-radio-group v-model="labelPosition" >
       <el-radio-button label="day">天天赢</el-radio-button>
       <el-radio-button label="week">周周发</el-radio-button>
       <el-radio-button label="month">月月赚</el-radio-button>
       <el-radio-button label="free">互惠盈</el-radio-button>
     </el-radio-group>
     <div style="margin-top:20px;"></div>
-     <el-form label-width="130px" :model="form" style="" size="small">
+     <el-form label-width="130px" :model="form" style="" >
        <el-form-item label="开启/关闭">
         <el-radio-group v-model="isOpen" @keyup.enter.native="submit">
           <el-radio :label="true">开启</el-radio>
@@ -68,7 +68,7 @@
      </el-form>
 
      <div style="padding-bottom: 40px" align="center" v-if="handleAble('/admin/merchantSetProduct/save', Buttons)">
-        <el-button type="primary" size="small" @click="submit">提交</el-button>
+        <el-button type="primary"  @click="submit">提交</el-button>
      </div>
   </div>
 </template>

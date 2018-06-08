@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="用户名">
       <el-input v-model="formInline.username" @keyup.enter.native="onSubmit" clearable placeholder=""></el-input>
     </el-form-item>
@@ -25,7 +25,7 @@
    <el-table
     :data="tableData"
     style="width: 100%"
-    size="small">
+    >
     <el-table-column
       prop="id"
       label="序号"
@@ -71,7 +71,7 @@
       label="操作"
       width="70" v-if="handleAble('/admin/userCash/userCashInfo', Buttons)">
       <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text" size="small">资金明细</el-button>
+        <el-button @click="handleClick(scope.row)" type="text" >资金明细</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -98,6 +98,7 @@ export default {
     return {
       formInline: {
         page: 1,
+        pageSize: 10,
         username: '',
         mobile: '',
         nameLike: '',
@@ -106,7 +107,7 @@ export default {
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       }
@@ -119,7 +120,7 @@ export default {
     // 获取表格数据
     getTableDate (formInline) {
       const that = this
-      API.myUser(formInline.page, formInline.username, formInline.mobile, formInline.status, formInline.nameLike).then(response => {
+      API.myUser(formInline).then(response => {
         if (response.code === 0) {
           let result = response.data.pageBean.result
           that.pagination.pageSize = response.data.pageBean.pageSize

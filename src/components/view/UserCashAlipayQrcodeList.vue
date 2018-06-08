@@ -1,9 +1,8 @@
 <template>
   <div class="bis-page">
-    <el-button v-if="handleAble('/admin/userCashAlipayQrcode/save', Buttons)" type="success" size="small" @click="add"><i class="el-icon-plus"></i>添加</el-button>
+    <el-button v-if="handleAble('/admin/userCashAlipayQrcode/save', Buttons)" type="success"  @click="add"><i class="el-icon-plus"></i>添加</el-button>
      <el-table
-      :data="tableData"
-      size="small"
+      :data="tableData"      
       style="width: 100%;margin-top: 20px;">
       <el-table-column
         prop="id"
@@ -23,7 +22,7 @@
          v-if="handleAble('/admin/userCashAlipayQrcode/del', Buttons)"
         width="90">
         <template slot-scope="scope">
-          <el-button @click="handleClick2(scope.row)" type="text" size="small" style="color: #DD5A43">删除</el-button>
+          <el-button @click="handleClick2(scope.row)" type="text"  style="color: #DD5A43">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -42,7 +41,7 @@
    </div>
 
    <el-dialog :title="alert" :visible.sync="dialogFormVisible" width="30%">
-    <el-form :model="formLabelAlign" label-width="100px" size="small">
+    <el-form :model="formLabelAlign" label-width="100px" >
       <el-form-item label="收款码备注" prop="name">
         <el-input type="textarea" :rows="3" v-model="formLabelAlign.name" clearable auto-complete="off"></el-input>
       </el-form-item>
@@ -75,12 +74,12 @@ export default {
       upload_url: uri + '/plupload',
       form: {
         page: 1,
-        pageSize: 15
+        pageSize: 10
       },
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       },

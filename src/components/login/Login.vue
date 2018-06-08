@@ -1,8 +1,8 @@
 <template>
   <div class="bis-page" id="login">
     <div id="login-cont">
-       <h3 id="login-h">后台管理系统<br/><span>版本 v1.0</span></h3>
-       <el-form id="login-form" size="small" :model="userInfo" :rules="rules" ref="userInfo" label-width="100px">
+       <h3 id="login-h">业务后台管理系统<br/><span>版本 v1.0</span></h3>
+       <el-form id="login-form"  :model="userInfo" :rules="rules" ref="userInfo" label-width="100px">
           <el-form-item prop="username" label="账号">
               <el-input type="text" v-model="userInfo.username" placeholder="请输入账号" auto-complete="off"></el-input>
           </el-form-item>
@@ -18,7 +18,7 @@
             </el-col>
           </el-form-item>
           <el-form-item>
-           <el-button type="primary" style="float:right;width: 100px;" @click="submitForm('userInfo')">提交</el-button>
+           <el-button type="primary" style="width: 100%;" @click="submitForm('userInfo')">提交</el-button>
           </el-form-item>
        </el-form>
     </div>
@@ -117,7 +117,7 @@ export default {
   #login-cont{
     position: absolute;
     width: 400px;
-    height: 330px;
+    height: 360px;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 4px;
     left: 0;

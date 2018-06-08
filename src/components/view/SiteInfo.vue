@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-    <el-form :model="form" status-icon ref="ruleForm" label-width="130px" :rules="rules" class="demo-ruleForm" style="width:800px" size="small">
+    <el-form :model="form" status-icon ref="ruleForm" label-width="130px" :rules="rules" class="demo-ruleForm" style="width:800px" >
       <el-form-item label="网站名称：" >
         <el-input type="text" v-model="form.siteName" @keyup.enter.native="submitForm" clearable auto-complete="off"></el-input>
       </el-form-item>

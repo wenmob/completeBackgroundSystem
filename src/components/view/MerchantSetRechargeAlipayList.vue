@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-    <el-form ref="form" :model="form" :rules="rules" label-width="100px" style="width:500px" size="small">
+    <el-form ref="form" :model="form" :rules="rules" label-width="100px" style="width:500px" >
       <el-form-item label="支付宝名称" prop="name">
         <el-input v-model="form.name" @keyup.enter.native="submitForm('form')" clearable></el-input>
       </el-form-item>

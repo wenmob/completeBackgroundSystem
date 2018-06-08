@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="用户名:">
       <el-input v-model="formInline.username" @keyup.enter.native="onSubmit" clearable placeholder=""></el-input>
     </el-form-item>
@@ -28,7 +28,7 @@
    <el-table
     :data="tableData"
     style="width: 100%"
-    size="small">
+    >
     <el-table-column
       prop="username"
       label="用户名/手机号">
@@ -52,7 +52,7 @@
      v-if="handleAble('/admin/userCashAlipayBind/del', Buttons)"
       label="操作">
       <template slot-scope="scope">
-         <el-button @click="handleClick(scope.row)" type="text" size="small" style="color: #DD5A43">解除绑定</el-button>
+         <el-button @click="handleClick(scope.row)" type="text"  style="color: #DD5A43">解除绑定</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -75,7 +75,7 @@
     title="提示"
     :visible.sync="dialogVisible"
     width="30%">
-    <el-form  label-width="100px" :model="formLabelAlign" ref="formLabelAlign" :rules="rules" size="small">
+    <el-form  label-width="100px" :model="formLabelAlign" ref="formLabelAlign" :rules="rules" >
       <el-form-item label="手机号码" prop="mobile">
         <el-input v-model="formLabelAlign.mobile" @keyup.enter.native="submitForm('formLabelAlign')" clearable></el-input>
       </el-form-item>
@@ -110,7 +110,7 @@ export default {
       dialogVisible: false,
       formInline: {
         page: 1,
-        pageSize: 15,
+        pageSize: 10,
         dateAddBegin: '',
         dateAddEnd: '',
         username: '',
@@ -121,7 +121,7 @@ export default {
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       },

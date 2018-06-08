@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="账号:">
       <el-input type="text" v-model="formInline.account" @keyup.enter.native="onSubmit" clearable placeholder=""></el-input>
     </el-form-item>
@@ -21,7 +21,7 @@
    <el-table
     :data="tableData"
     style="width: 100%"
-    size="small">
+    >
     <el-table-column
       prop="account"
       label="账号">
@@ -53,8 +53,8 @@
     <el-table-column
       label="操作">
       <template slot-scope="scope">
-        <el-button v-if="handleAble('/admin/sysTraderSon/save', Buttons)" @click="handleClick(scope.row)" type="text" style="color: #69AA46" size="small">编辑</el-button>
-        <el-button v-if="handleAble('/admin/sysTraderSon/del', Buttons)" type="text" style="color: #DD5A5E" size="small" @click="del(scope.row)">删除</el-button>
+        <el-button v-if="handleAble('/admin/sysTraderSon/save', Buttons)" @click="handleClick(scope.row)" type="text" style="color: #69AA46" >编辑</el-button>
+        <el-button v-if="handleAble('/admin/sysTraderSon/del', Buttons)" type="text" style="color: #DD5A5E"  @click="del(scope.row)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -73,7 +73,7 @@
    </div>
 
    <el-dialog :title="spanTitle" :visible.sync="dialogFormVisible" width="30%">
-     <el-form label-width="80px" :model="formLabelAlign" :rules="rules" ref="formLabelAlign" size="small">
+     <el-form label-width="80px" :model="formLabelAlign" :rules="rules" ref="formLabelAlign" >
         <el-form-item label="账号" prop="account">
           <el-input v-model="formLabelAlign.account"></el-input>
         </el-form-item>
@@ -110,13 +110,14 @@ export default {
       spanTitle: '',
       formInline: {
         page: 1,
+        pageSize: 10,
         account: '',
         status: ''
       },
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       },
@@ -145,7 +146,7 @@ export default {
     getTableDate () {
       const that = this
       let formInline = that.formInline
-      API.sysTraderSonList(formInline.page, formInline.account, formInline.status).then(response => {
+      API.sysTraderSonList(formInline).then(response => {
         if (response.code === 0) {
           let result = response.data.pageBean.result
           that.pagination.pageSize = response.data.pageBean.pageSize

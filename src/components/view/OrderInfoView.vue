@@ -2,11 +2,11 @@
   <div class="bis-page">
     <!--按钮-->
     <div>
-      <el-button type="primary" size="small" icon="el-icon-arrow-left" @click="goBack">返回</el-button>
-      <el-button type="warning" size="small" icon="el-icon-tickets" @click="assigned" v-if="orderDetails.status == 15 && merchantSet.isOwnZiguan && handleAble('/admin/orderInfo/allotAccount', Buttons)">分配账号</el-button>
-      <el-button type="warning" size="small" icon="el-icon-delete" @click="closeOrder" v-if="orderDetails.status == 15 && handleAble('/admin/orderInfo/closeOrder', Buttons)">关闭订单</el-button>
-      <el-button type="warning" size="small" icon="el-icon-warning" @click="stopTrade" v-if="orderDetails.status == 2 && handleAble('/admin/orderInfo/stopOperation', Buttons)">停止操盘</el-button>
-      <el-button type="warning" size="small" icon="el-icon-document" @click="xuYue" v-if="expire == 1 && orderDetails.status == 2 && handleAble('/admin/orderInfo/xuYue', Buttons)">手动续约</el-button>
+      <el-button type="primary"  icon="el-icon-arrow-left" @click="goBack">返回</el-button>
+      <el-button type="warning"  icon="el-icon-tickets" @click="assigned" v-if="orderDetails.status == 15 && merchantSet.isOwnZiguan && handleAble('/admin/orderInfo/allotAccount', Buttons)">分配账号</el-button>
+      <el-button type="warning"  icon="el-icon-delete" @click="closeOrder" v-if="orderDetails.status == 15 && handleAble('/admin/orderInfo/closeOrder', Buttons)">关闭订单</el-button>
+      <el-button type="warning"  icon="el-icon-warning" @click="stopTrade" v-if="orderDetails.status == 2 && handleAble('/admin/orderInfo/stopOperation', Buttons)">停止操盘</el-button>
+      <el-button type="warning"  icon="el-icon-document" @click="xuYue" v-if="expire == 1 && orderDetails.status == 2 && handleAble('/admin/orderInfo/xuYue', Buttons)">手动续约</el-button>
     </div>
     <!--订单信息-->
     <h3 class="order_view_t">订单信息：</h3>
@@ -98,7 +98,7 @@
           :data="tableData1"
           stripe
           style="width: 100%"
-          size="small"
+          
           >
           <el-table-column
             prop="typeStr"
@@ -141,21 +141,21 @@
             <template slot-scope="scope">
               <div v-if="scope.row.isCheck">
                 <div v-if="scope.row.type == 0 && handleAble('/admin/orderInfo/checkEndOrderSuccess', Buttons)">
-                  <el-button type="text" size="small" style="color: #36B72E" @click="checkEndOrderSuccess(scope.row)">审核成功</el-button>
+                  <el-button type="text"  style="color: #36B72E" @click="checkEndOrderSuccess(scope.row)">审核成功</el-button>
                 </div>
                 <div v-else-if="scope.row.type == 1">
-                  <el-button v-if="handleAble('/admin/orderInfo/checkTypeSuccess', Buttons)" type="text" size="small" style="color: #36B72E" @click="checkTypeSuccess(scope.row)">审核成功</el-button>
-                  <el-button v-if="handleAble('/admin/orderInfo/checkTypeError', Buttons)" type="text" size="small" style="color: #D13417" @click="checkTypeError(scope.row)">审核失败</el-button>
+                  <el-button v-if="handleAble('/admin/orderInfo/checkTypeSuccess', Buttons)" type="text"  style="color: #36B72E" @click="checkTypeSuccess(scope.row)">审核成功</el-button>
+                  <el-button v-if="handleAble('/admin/orderInfo/checkTypeError', Buttons)" type="text"  style="color: #D13417" @click="checkTypeError(scope.row)">审核失败</el-button>
                 </div>
                 <div v-else-if="scope.row.type == 2">
-                  <el-button v-if="handleAble('/admin/orderInfo/checkTypeSuccess', Buttons)" type="text" size="small" style="color: #36B72E" @click="checkTypeSuccess(scope.row)">审核成功</el-button>
+                  <el-button v-if="handleAble('/admin/orderInfo/checkTypeSuccess', Buttons)" type="text"  style="color: #36B72E" @click="checkTypeSuccess(scope.row)">审核成功</el-button>
                 </div>
                 <div v-else-if="scope.row.type == 3">
-                  <el-button v-if="handleAble('/admin/orderInfo/checkTypeSuccess', Buttons)" type="text" size="small" style="color: #36B72E" @click="checkTypeSuccess(scope.row)">审核成功</el-button>
+                  <el-button v-if="handleAble('/admin/orderInfo/checkTypeSuccess', Buttons)" type="text"  style="color: #36B72E" @click="checkTypeSuccess(scope.row)">审核成功</el-button>
                 </div>
                 <div v-else-if="scope.row.type == 4">
-                  <el-button v-if="handleAble('/admin/orderInfo/checkTypeSuccess', Buttons)" type="text" size="small" style="color: #36B72E" @click="checkTypeSuccess(scope.row)">审核成功</el-button>
-                  <el-button v-if="handleAble('/admin/orderInfo/checkTypeError', Buttons)" type="text" size="small" style="color: #D13417" @click="checkTypeError(scope.row)">审核失败</el-button>
+                  <el-button v-if="handleAble('/admin/orderInfo/checkTypeSuccess', Buttons)" type="text"  style="color: #36B72E" @click="checkTypeSuccess(scope.row)">审核成功</el-button>
+                  <el-button v-if="handleAble('/admin/orderInfo/checkTypeError', Buttons)" type="text"  style="color: #D13417" @click="checkTypeError(scope.row)">审核失败</el-button>
                 </div>
               </div>
             </template>
@@ -169,7 +169,7 @@
           :data="tableData2"
           stripe
           style="width: 100%"
-          size="small"
+          
           >
           <el-table-column
             prop="behavior"
@@ -237,7 +237,7 @@
           :data="tableData3"
           stripe
           style="width: 100%"
-          size="small"
+          
           >
           <el-table-column
             label="股票名称"
@@ -281,7 +281,7 @@
       title="分配账号"
       :visible.sync="dialogVisible1"
       width="30%">
-      <el-form size="small" :model="diaFrom" ref="diaFrom" :rules="rules" label-width="100px">
+      <el-form  :model="diaFrom" ref="diaFrom" :rules="rules" label-width="100px">
         <el-form-item label="用户账号" prop="username">
           <el-input v-model="diaFrom.username"></el-input>
         </el-form-item>

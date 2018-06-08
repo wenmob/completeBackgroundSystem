@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="名称:">
       <el-input v-model="formInline.nameLike" @keyup.enter.native="onSubmit" clearable placeholder=""></el-input>
     </el-form-item>
@@ -39,7 +39,7 @@
    <el-table
     :data="tableData"
     style="width: 100%"
-    size="small">
+    >
     <el-table-column
       prop="name"
       label="名称">
@@ -84,10 +84,10 @@
     </el-table-column>
     <el-table-column
       label="操作"
-      width="90">
+      width="120">
       <template slot-scope="scope">
-         <el-button v-if="handleAble('/admin/siteBanner/save', Buttons)" @click="handleClick1(scope.row)" type="text" size="small" style="color: #467929">编辑</el-button>
-         <el-button v-if="handleAble('/admin/siteBanner/del', Buttons)" @click="handleClick2(scope.row)" type="text" size="small" style="color: #DD5A43">删除</el-button>
+         <el-button v-if="handleAble('/admin/siteBanner/save', Buttons)" @click="handleClick1(scope.row)" type="text"  style="color: #467929">编辑</el-button>
+         <el-button v-if="handleAble('/admin/siteBanner/del', Buttons)" @click="handleClick2(scope.row)" type="text"  style="color: #DD5A43">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -97,7 +97,7 @@
     :title="alert"
     :visible.sync="dialogFormVisible"
     width="30%">
-    <el-form  label-width="100px" :model="formLabelAlign" ref="formLabelAlign" :rules="rules" size="small">
+    <el-form  label-width="100px" :model="formLabelAlign" ref="formLabelAlign" :rules="rules" >
       <el-form-item label="名称" prop="name">
         <el-input v-model="formLabelAlign.name" @keyup.enter.native="submitForm('formLabelAlign')" clearable></el-input>
       </el-form-item>

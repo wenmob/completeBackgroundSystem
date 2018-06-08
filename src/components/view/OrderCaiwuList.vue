@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="订单编号:">
       <el-input v-model="formInline.number" placeholder=""></el-input>
     </el-form-item>
@@ -45,7 +45,7 @@
    <el-table
     :data="tableData"
     style="width: 100%;margin-top:20px"
-    size="small">
+    >
     <el-table-column
       prop="id"
       label="序号"
@@ -90,7 +90,7 @@
     <el-table-column
       prop="dateAdd"
       label="添加/修改时间"
-      width="150">
+      width="160">
       <template slot-scope="scope">
         <span>
           {{scope.row.dateAdd ? scope.row.dateAdd : '-'}}<br/>
@@ -101,7 +101,7 @@
     <el-table-column
       label="操作" v-if="handleAble('/admin/orderInfo/view', Buttons)">
       <template slot-scope="scope">
-        <el-button type="text" @click="goDetails(scope.row.orderId)" size="small">订单详情</el-button>
+        <el-button type="text" @click="goDetails(scope.row.orderId)" >订单详情</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -128,7 +128,7 @@ export default {
     return {
       formInline: {
         page: 1,
-        pageSize: 15,
+        pageSize: 10,
         dateAddBegin: '',
         dateAddEnd: '',
         dateUpdateBegin: '',
@@ -140,7 +140,7 @@ export default {
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       }

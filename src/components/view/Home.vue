@@ -109,7 +109,7 @@
             v-model="timeDefault"
             type="date"
             placeholder="选择日期"
-            size="small"
+            
             style="width:320px;"
             value-format="yyyy-MM-dd"
             @change="changeTypeFun">

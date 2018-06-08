@@ -70,18 +70,11 @@ export const API = {
     })
   },
   // 获取用户列表
-  baseInfoList: (page, username, mobile, status, salesManager, nameLike) => {
+  baseInfoList: (form) => {
     return request({
       url: '/admin/userBaseInfo/list',
       method: 'post',
-      data: {
-        page,
-        username,
-        mobile,
-        status,
-        salesManager,
-        nameLike
-      }
+      data: form
     })
   },
   // 批量分配销售经理
@@ -127,17 +120,11 @@ export const API = {
     })
   },
   // 我的用户
-  myUser: (page, username, mobile, status, nameLike) => {
+  myUser: (form) => {
     return request({
       url: '/admin/userBaseInfo/my',
       method: 'post',
-      data: {
-        page,
-        username,
-        mobile,
-        status,
-        nameLike
-      }
+      data: form
     })
   },
   // 资金明细
@@ -176,11 +163,11 @@ export const API = {
     })
   },
   // 短信验证码
-  SysShortMessage: (ip, page, dateAddBegin, dateAddEnd, mobile, code, type) => {
+  SysShortMessage: (form) => {
     return request({
       url: '/admin/sysShortMessage/list',
       method: 'post',
-      data: { ip, page, dateAddBegin, dateAddEnd, mobile, code, type }
+      data: form
     })
   },
   // 获取资管系统对接配置
@@ -200,11 +187,11 @@ export const API = {
     })
   },
   // 获取操盘账号的列表
-  sysTraderSonList: (page, account, status) => {
+  sysTraderSonList: (form) => {
     return request({
       url: '/admin/sysTraderSon/list',
       method: 'post',
-      data: { page, account, status }
+      data: form
     })
   },
   // 新增操盘账号或编辑操盘账号
@@ -232,11 +219,11 @@ export const API = {
     })
   },
   // 报单通道管理列表
-  merchantSetAccountGroupList: (page) => {
+  merchantSetAccountGroupList: (form) => {
     return request({
       url: '/admin/merchantSetAccountGroup/list',
       method: 'post',
-      data: { page }
+      data: form
     })
   },
   // 报单通道的同步功能
@@ -272,19 +259,19 @@ export const API = {
     })
   },
   // 获取系统日志
-  sysLogMerchantList: (page, dateAddBegin, dateAddEnd, moduleType, oprateType, name, adminId, uriLike, msgLike, ipLike) => {
+  sysLogMerchantList: (form) => {
     return request({
       url: '/admin/sysLogMerchant/list',
       method: 'post',
-      data: { page, dateAddBegin, dateAddEnd, moduleType, oprateType, name, adminId, uriLike, msgLike, ipLike }
+      data: form
     })
   },
   // 获取管理员列表
-  merchantSubAcountList: (page, dateAddBegin, dateAddEnd, nameLike, username, mobile, status) => {
+  merchantSubAcountList: (form) => {
     return request({
       url: '/admin/merchantSubAcount/list',
       method: 'post',
-      data: { page, dateAddBegin, dateAddEnd, nameLike, username, mobile, status }
+      data: form
     })
   },
   // 获取角色列表

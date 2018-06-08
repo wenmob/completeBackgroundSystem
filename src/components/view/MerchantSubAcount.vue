@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-    <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+    <el-form :inline="true" :model="formInline" class="demo-form-inline" >
       <el-form-item label="用户名">
         <el-input v-model="formInline.username" @keyup.enter.native="onSubmit" clearable placeholder=""></el-input>
       </el-form-item>
@@ -33,7 +33,7 @@
      <el-table
       :data="tableData"
       style="width: 100%"
-      size="small">
+      >
       <el-table-column
         prop="id"
         label="序号"
@@ -77,13 +77,20 @@
       </el-table-column>
       <el-table-column
         label="操作"
-        width="190">
+        width="120">
         <template slot-scope="scope">
-          <el-button v-if="handleAble('/admin/merchantSubAcount/save', Buttons)" @click="modify(scope.row)" type="text" size="small" style="color:#7EB561">修改</el-button>
-          <el-button v-if="handleAble('/admin/merchantSubAcount/resetPwd', Buttons)" type="text" size="small" @click="rePwd(scope.row)" style="color:#FD9A49">重置密码</el-button>
-          <el-button v-if="scope.row.status == 0 && handleAble('/admin/merchantSubAcount/stop', Buttons)" type="text" size="small" @click="tradeUse(scope.row)" style="color:#E27360">禁用</el-button>
-          <el-button v-if="scope.row.status == 1 && handleAble('/admin/merchantSubAcount/unstop', Buttons)" type="text" size="small" @click="tradeUse(scope.row)" style="color:#E27360">启用</el-button>
-          <el-button type="text" size="small" @click="delUse(scope.row)" style="color:red" v-if="handleAble('/admin/merchantSubAcount/del', Buttons)">删除</el-button>
+          <el-dropdown>
+            <el-button type="primary">
+              操作<i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item><el-button v-if="handleAble('/admin/merchantSubAcount/save', Buttons)" @click="modify(scope.row)" type="text"  style="color:#7EB561">修改</el-button></el-dropdown-item>
+              <el-dropdown-item><el-button v-if="handleAble('/admin/merchantSubAcount/resetPwd', Buttons)" type="text"  @click="rePwd(scope.row)" style="color:#FD9A49">重置密码</el-button></el-dropdown-item>
+              <el-dropdown-item><el-button v-if="scope.row.status == 0 && handleAble('/admin/merchantSubAcount/stop', Buttons)" type="text"  @click="tradeUse(scope.row)" style="color:#E27360">禁用</el-button></el-dropdown-item>
+              <el-dropdown-item><el-button v-if="scope.row.status == 1 && handleAble('/admin/merchantSubAcount/unstop', Buttons)" type="text"  @click="tradeUse(scope.row)" style="color:#E27360">启用</el-button></el-dropdown-item>
+              <el-dropdown-item><el-button type="text"  @click="delUse(scope.row)" style="color:red" v-if="handleAble('/admin/merchantSubAcount/del', Buttons)">删除</el-button></el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </template>
       </el-table-column>
     </el-table>
@@ -103,7 +110,7 @@
 
    <!--弹出框-->
    <el-dialog :title="spanTitle" :visible.sync="dialogFormVisible" width="25%">
-     <el-form label-width="100px" :model="formLabelAlign" :rules="rules" ref="formLabelAlign" size="small">
+     <el-form label-width="100px" :model="formLabelAlign" :rules="rules" ref="formLabelAlign" >
         <el-form-item label="用户名:" prop="username">
           <el-input v-model="formLabelAlign.username" @keyup.enter.native="establish('formLabelAlign')" clearable></el-input>
         </el-form-item>
@@ -137,6 +144,7 @@ export default {
     return {
       formInline: {
         page: 1,
+        pageSize: 10,
         dateAddBegin: '',
         dateAddEnd: '',
         nameLike: '',
@@ -165,7 +173,7 @@ export default {
       spanTitle: '',
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       },
@@ -190,7 +198,7 @@ export default {
     getTableDate () {
       const that = this
       let formInline = that.formInline
-      API.merchantSubAcountList(formInline.page, formInline.dateAddBegin, formInline.dateAddEnd, formInline.nameLike, formInline.username, formInline.mobile, formInline.status).then(response => {
+      API.merchantSubAcountList(formInline).then(response => {
         if (response.code === 0) {
           let result = response.data.pageBean.result
           that.pagination.pageSize = response.data.pageBean.pageSize

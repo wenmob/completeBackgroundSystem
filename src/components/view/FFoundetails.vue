@@ -1,10 +1,10 @@
 <template>
   <div class="bis-page">
-   <el-button type="primary" icon="el-icon-arrow-left" size="small" @click="goBack">返回</el-button>
+   <el-button type="primary" icon="el-icon-arrow-left"  @click="goBack">返回</el-button>
    <el-table
     :data="tableData"
     style="width: 100%;margin-top:15px"
-    size="small">
+    >
     <el-table-column
       prop="dateAdd"
       label="交易时间">
@@ -70,7 +70,7 @@ export default {
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       }

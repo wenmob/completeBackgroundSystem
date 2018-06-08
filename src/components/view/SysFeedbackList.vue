@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="反馈类型:">
       <el-select v-model="formInline.type" clearable placeholder="" @keyup.enter.native="onSubmit">
           <el-option label="全部" value=""></el-option>
@@ -36,7 +36,7 @@
    <el-table
     :data="tableData"
     style="width: 100%"
-    size="small">
+    >
     <el-table-column
       prop="id"
       label="序号">
@@ -90,11 +90,11 @@
     </el-table-column>
     <el-table-column
       label="操作"
-      width="130">
+      width="150">
       <template slot-scope="scope">
-         <el-button @click="handleClick1(scope.row)" type="text" size="small" style="color: #318BD6">详情</el-button>
-         <el-button @click="handleClick2(scope.row)" type="text" size="small" style="color: #467929" v-if="!scope.row.replyDetails && handleAble('/admin/sysFeedback/save', Buttons)">回复</el-button>
-         <el-button v-if="handleAble('/admin/sysFeedback/del', Buttons)" @click="handleClick3(scope.row)" type="text" size="small" style="color: #DD5A43">删除</el-button>
+         <el-button @click="handleClick1(scope.row)" type="text"  style="color: #318BD6">详情</el-button>
+         <el-button @click="handleClick2(scope.row)" type="text"  style="color: #467929" v-if="!scope.row.replyDetails && handleAble('/admin/sysFeedback/save', Buttons)">回复</el-button>
+         <el-button v-if="handleAble('/admin/sysFeedback/del', Buttons)" @click="handleClick3(scope.row)" type="text"  style="color: #DD5A43">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -150,7 +150,7 @@
 
   <!--回复-->
   <el-dialog title="回复" :visible.sync="dialogVisible" width="30%" label-width="100px">
-     <el-form size="small" :rules="rules" :model="formReply" ref="formReply" label-width="100px">
+     <el-form  :rules="rules" :model="formReply" ref="formReply" label-width="100px">
        <el-form-item label="回复内容：" prop="replyDetails">
          <el-input type="textarea" :rows="5" v-model="formReply.replyDetails"></el-input>
        </el-form-item>
@@ -172,7 +172,7 @@ export default {
       dialogVisible: false,
       formInline: {
         page: 1,
-        pageSize: 15,
+        pageSize: 10,
         dateAddBegin: '',
         dateAddEnd: '',
         dateUpdateBegin: '',
@@ -183,7 +183,7 @@ export default {
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       },

@@ -1,6 +1,6 @@
 <template>
   <div class="bis-page">
-   <el-form :inline="true" :model="formInline" class="demo-form-inline" size="small">
+   <el-form :inline="true" :model="formInline" class="demo-form-inline" >
     <el-form-item label="用户名:">
       <el-input v-model="formInline.username" @keyup.enter.native="onSubmit" clearable placeholder=""></el-input>
     </el-form-item>
@@ -25,7 +25,7 @@
    <el-table
     :data="tableData"
     style="width: 100%"
-    size="small">
+    >
     <el-table-column
       prop="id"
       label="序号"
@@ -59,7 +59,7 @@
       label="操作"
       width="60">
       <template slot-scope="scope">
-         <el-button @click="handleClick(scope.row)" type="text" size="small" style="color: #DD5A43" v-if="handleAble('/admin/withdrawBlacklist/del', Buttons)">删除</el-button>
+         <el-button @click="handleClick(scope.row)" type="text"  style="color: #DD5A43" v-if="handleAble('/admin/withdrawBlacklist/del', Buttons)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -82,7 +82,7 @@
     title="添加提现黑名单"
     :visible.sync="dialogVisible"
     width="30%">
-    <el-form  label-width="100px" :model="formLabelAlign" ref="formLabelAlign" size="small">
+    <el-form  label-width="100px" :model="formLabelAlign" ref="formLabelAlign" >
       <el-form-item>
         <el-tag type="warning">用户账号或手机号，二选一</el-tag>
       </el-form-item>
@@ -112,7 +112,7 @@ export default {
       dialogVisible: false,
       formInline: {
         page: 1,
-        pageSize: 15,
+        pageSize: 10,
         dateAddBegin: '',
         dateAddEnd: '',
         username: '',
@@ -122,7 +122,7 @@ export default {
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       },

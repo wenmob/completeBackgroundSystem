@@ -1,11 +1,11 @@
 <template>
   <div class="bis-page">
     <div>
-      <el-button v-if="handleAble('/admin/merchantSetRechargeOff/save', Buttons)" type="success" size="small" @click="add"><i class="el-icon-plus"></i>添加</el-button>
+      <el-button v-if="handleAble('/admin/merchantSetRechargeOff/save', Buttons)" type="success"  @click="add"><i class="el-icon-plus"></i>添加</el-button>
     </div>
      <el-table
       :data="tableData"
-      size="small"
+      
       style="width: 100%;margin-top: 20px;">
       <el-table-column
         prop="id"
@@ -46,10 +46,10 @@
       </el-table-column>
       <el-table-column
         label="操作"
-        width="90">
+        width="120">
         <template slot-scope="scope">
-          <el-button v-if="handleAble('/admin/merchantSetRechargeOff/save', Buttons)" @click="handleClick1(scope.row)" type="text" size="small" style="color: #69AA46">编辑</el-button>
-          <el-button v-if="handleAble('/admin/merchantSetRechargeOff/del', Buttons)" @click="handleClick2(scope.row)" type="text" size="small" style="color: #DD5A43">删除</el-button>
+          <el-button v-if="handleAble('/admin/merchantSetRechargeOff/save', Buttons)" @click="handleClick1(scope.row)" type="text"  style="color: #69AA46">编辑</el-button>
+          <el-button v-if="handleAble('/admin/merchantSetRechargeOff/del', Buttons)" @click="handleClick2(scope.row)" type="text"  style="color: #DD5A43">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -68,7 +68,7 @@
    </div>
 
    <el-dialog :title="alert" :visible.sync="dialogFormVisible" width="26%">
-    <el-form :model="formLabelAlign" ref="formLabelAlign" :rules="rules" label-width="110px" size="small">
+    <el-form :model="formLabelAlign" ref="formLabelAlign" :rules="rules" label-width="110px" >
       <el-form-item label="开户银行" prop="bankName">
         <el-input v-model="formLabelAlign.bankName" @keyup.enter.native="submitForm('formLabelAlign')" clearable auto-complete="off"></el-input>
       </el-form-item>
@@ -106,12 +106,12 @@ export default {
     return {
       form: {
         page: 1,
-        pageSize: 15
+        pageSize: 10
       },
       tableData: [],
       pagination: {
         currentPage: 1,
-        pageSizes: [15],
+        pageSizes: [10],
         pageSize: 0,
         tatal: 0
       },
