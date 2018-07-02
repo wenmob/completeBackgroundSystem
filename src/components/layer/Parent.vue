@@ -35,7 +35,7 @@
           <div style="clear:both"></div>
         </el-header>
         <el-main id="layer-app">
-          <transition :name="transitionName">
+          <transition>
            <router-view class="Router"/>
           </transition>
         </el-main>
